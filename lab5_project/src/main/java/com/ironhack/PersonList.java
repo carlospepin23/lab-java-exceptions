@@ -7,9 +7,10 @@ import java.util.List;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.IOException;
+import java.util.UUID;
 
 public class PersonList {
-    private ArrayList<Person> list = new ArrayList<Person>();
+    private List<Person> list = new ArrayList<>();
 
 
     //METHODS
@@ -26,15 +27,20 @@ public class PersonList {
     }
 
     public Person clone(Person p) {
-        return new Person((p.getId() / 15) + 3, p.getName(), p.getAge(), p.getOccupation());
+        return new Person(UUID.randomUUID().hashCode(), p.getName(), p.getAge(), p.getOccupation());
 
     }
 
-        public void writePersonToFile (Person p) throws IOException {
-            FileWriter fileWriter = new FileWriter("person.txt");
-            PrintWriter printWriter = new PrintWriter(fileWriter);
-            printWriter.println(p.toString());
-            printWriter.close();
+        public void writePersonToFile (Person p) {
+            try{
+                FileWriter fileWriter = new FileWriter("person.txt");
+                PrintWriter printWriter = new PrintWriter(fileWriter);
+                printWriter.println(p.toString());
+                printWriter.close();
+            }catch (IOException e){
+                System.out.println("Error: " + e.getMessage());
+            }
+
         }
 
         //ARRAYLIST METHODS
